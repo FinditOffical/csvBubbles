@@ -1,6 +1,8 @@
 # csvBubbles
 cvsBubbles is a bubble map generator. It provides a map based on the transactions you give it.
 
+Unfinished, but will update soon :)
+
 **Step 1**
 
 <img width="463" alt="Screenshot 2024-10-30 at 11 31 28 PM" src="https://github.com/user-attachments/assets/111aef00-becd-49b2-a159-5ed416a4fc84">
