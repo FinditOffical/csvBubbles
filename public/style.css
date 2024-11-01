@@ -1,0 +1,80 @@
+/* Reset and base styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: white;
+    background-color: #1A1A44;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #1A1A44;
+  }
+  
+  .button:hover {background-color: #1A1A44}
+  
+  .button:active {
+    background-color: #1A1A44;
+    transform: translateY(4px);
+    box-shadow: #1A1A44;
+  }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000022;
+    color: #E0E0E0;
+    overflow: hidden;
+}
+
+#container {
+    position: relative; /* Set a relative position for the container */
+}
+
+#upload-container {
+    position: absolute; /* Position it absolutely */
+    top: 20px; /* Adjust as needed to position it */
+    right: 20px; /* Position it in the top right corner */
+    z-index: 10; /* Ensure it appears above the chart */; /* Optional: a slight background to make it stand out */
+    color: white;
+    padding: 10px; /* Optional: padding for better appearance */
+    border-radius: 5px; /* Optional: rounded corners */
+}
+#upload-form button:hover {
+    background: linear-gradient(135deg, #ff7e85, #ffd1a6);
+}
+
+.bubble {
+    transition: fill 0.3s, r 0.3s, filter 0.3s; /* Include filter in transition */
+}
+
+#chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+svg {
+    height: 800px;
+    width: 100%; /* Full width */
+    height: 800px; /* Fixed height */
+}
+
+circle {
+    stroke:#FF0000;
+    stroke-width: 0.5;
+    transition: fill 0.3s, r 0.3s;
+}
+
+circle:hover {
+    stroke-width: 2;
+    filter: drop-shadow(0 0 9px #8B0000);
+}
