@@ -8,4 +8,4 @@ We use D3.js to generate the bubble maps. If you would like to customize the map
 
 You must run it localy on your computer. Website will be uploaded once more developed.
 
-![[hippo] (Uploading CSVBUBBLESHOWgn-ezgif.com-video-to-gif-converter.gif)
+![hippo] (Uploading CSVBUBBLESHOWgn-ezgif.com-video-to-gif-converter.gif)
