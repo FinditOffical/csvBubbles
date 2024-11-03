@@ -1,15 +1,7 @@
-# csvBubbles
-cvsBubbles is a bubble map generator. It provides a map based on the transactions you give it.
+CSV Bubble is a project still in development. Currently only I am working on it in my free time, if you would like to help with the project you may.
 
-Unfinished, but will update soon :)
+**D3**
+We use D3.js to generate the bubble maps. If you would like to customize the maps, and change or add more functions. You see all the options here https://d3js.org/
 
-**Step 1**
-
-<img width="463" alt="Screenshot 2024-10-30 at 11 31 28 PM" src="https://github.com/user-attachments/assets/111aef00-becd-49b2-a159-5ed416a4fc84">
-Either select or drag and drop a .csv file of the wallets transactions.
-
-**Step 2**
-
-<img width="1710" alt="Screenshot 2024-10-30 at 11 32 41 PM" src="https://github.com/user-attachments/assets/0a968a69-7c32-4612-8f49-ade9f7b13496">
-
-Click ``Upload CSV``, the bubbles will appear. (You may have to zoom out a little.)
+**Access** 
+You must run it localy on your computer. Website will be uploaded once more developed.
