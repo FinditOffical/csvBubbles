@@ -1,0 +1,100 @@
+/* Reset and base styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: #E0E0E0;
+    overflow: hidden;
+}
+
+#container {
+    position: relative; /* Set a relative position for the container */
+}
+
+homebutton{
+    position: absolute;
+    top: 5px; /* Adjust this value to move the button higher or lower */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: rgb(42, 42, 42);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    border-color: darkred;
+    cursor: pointer;
+  }
+
+#upload-container {
+    opacity: 0.5;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    color: grey;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Button styling */
+.button {
+    opacity: 30;
+    display: inline-block;
+    padding: 2px 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+/*.button:hover {
+    background-color: blue;
+    color: white;
+}*/
+
+.button:active {
+    background-color: blue;
+    transform: translateY(4px);
+    box-shadow: 0 9px white;
+}
+
+#upload-form button:hover {
+    background: linear-gradient(135deg, #ff7e85, #ffd1a6);
+}
+
+/* Bubble map styling */
+.bubble {
+    transition: fill 0.3s, r 0.3s, filter 0.3s;
+}
+
+#chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+svg {
+    width: 100%;
+    height: 850px;
+}
+
+circle {
+    stroke: white;
+    stroke-width: 0.5;
+    transition: fill 0.3s, r 0.3s;
+}
+
+circle:hover {
+    stroke-width: 2;
+    filter: drop-shadow(0 0 9px red);
+}

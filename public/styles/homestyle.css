@@ -1,0 +1,35 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: black;
+  position: relative;
+}
+
+.container {
+  text-align: center;
+  opacity: 0.6;
+}
+
+button {
+  position: absolute;
+  bottom: 20px; /* Adjust this value to move the button higher or lower */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: rgb(42, 42, 42);
+  color: white;
+  border: none;
+  border-radius: 9px;
+  border-color: darkred;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: red;
+  color: white;
+}
