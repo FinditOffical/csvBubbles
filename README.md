@@ -7,3 +7,5 @@ We use D3.js to generate the bubble maps. If you would like to customize the map
 **Access** 
 
 You must run it localy on your computer. Website will be uploaded once more developed.
+
+![Uploading CSVBUBBLESHOWgn-ezgif.com-video-to-gif-converter.gif…]()
