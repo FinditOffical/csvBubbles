@@ -26,109 +26,94 @@ function createBubbleMap(data) {
     const width = window.innerWidth;
     const height = window.innerHeight * 0.9;
 
-    const chart = d3.select('#chart').html(''); // Clear existing chart
+    // Clear any existing chart content
+    const chart = d3.select('#chart').html('');
     const svg = chart.append('svg')
         .attr('width', width)
         .attr('height', height)
-        .call(d3.zoom().on('zoom', (event) => {
-            g.attr('transform', event.transform);
+        .call(d3.zoom().on("zoom", (event) => {
+            g.attr("transform", event.transform);
         }));
 
-    const g = svg.append('g'); // Group element to apply transformations for zoom and drag
+    const g = svg.append('g')
+        .attr("text-anchor", "middle")
+        .style("font", "10px sans-serif");
 
-    // Map data to required format for D3
-    const bubbleData = data.map(d => ({
-        name: d.to || "Transfer",  // Provide fallback if 'to' is missing
-        value: +d.amount,  // Ensure amount is numeric
-        from: d.from,
-        to: d.to
-    }));
+    // Create hierarchy and pack layout with increased padding for bubble separation
+    const root = d3.hierarchy({ children: data })
+        .sum(d => d.amount)
+        .sort((a, b) => b.amount - a.amount);
 
-    const volumeExtent = d3.extent(bubbleData, d => d.value);
+    const pack = d3.pack()
+        .size([width, height])
+        .padding(8);  // Increased padding to separate bubbles more
 
-    // Custom color scale based on value thresholds
+    pack(root);
+
     const colorScale = d3.scaleThreshold()
         .domain([1000000, 10000000, 10000000000])
         .range(["#FFD739", "#C299FC", "#9852F9", "#6807F9"]);
 
-    const simulation = d3.forceSimulation(bubbleData)
-        .force("charge", d3.forceManyBody().strength(-50))
-        .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("collision", d3.forceCollide().radius(d => Math.sqrt(d.value) * 5 + 5))
+    // Create a force simulation to add inertia/momentum effect
+    const simulation = d3.forceSimulation(root.leaves())
+        .force("x", d3.forceX(width / 2).strength(0.05))
+        .force("y", d3.forceY(height / 2).strength(0.05))
+        .force("collide", d3.forceCollide(d => d.r + 4))
+        .alphaDecay(0.02)  // Slow decay for lingering motion
         .on("tick", ticked);
 
-    const bubble = d3.pack()
-        .size([width, height])
-        .padding(1.5);
-
-    const root = d3.hierarchy({ children: bubbleData })
-        .sum(d => d.value);
-
-    bubble(root);
-
-    const positionLookup = new Map();
-    const links = [];
-
-    root.leaves().forEach((node) => {
-        positionLookup.set(node.data.name, node);
-        if (node.data.from && positionLookup.has(node.data.from)) {
-            links.push({
-                source: positionLookup.get(node.data.from),
-                target: node
-            });
-        }
-    });
-
-    g.selectAll('line')
-        .data(links)
-        .enter().append('line')
-        .attr('x1', d => d.source.x)
-        .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y)
-        .attr('stroke', '#ccc')
-        .attr('stroke-width', 1.5);
-
-    const nodes = g.selectAll('circle')
+    // Add a group for each bubble (node)
+    const node = g.selectAll("g")
         .data(root.leaves())
-        .enter().append('circle')
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y)
-        .attr('r', d => d.r)
-        .attr('fill', d => colorScale(d.data.value))
-        .attr('stroke', 'black')
-        .attr('stroke-width', 1)
+        .join("g")
+        .attr("transform", d => `translate(${d.x},${d.y})`)
         .call(d3.drag()
-            .on('start', dragStarted)
-            .on('drag', dragged)
-            .on('end', dragEnded));
+            .on("start", dragStarted)
+            .on("drag", dragged)
+            .on("end", dragEnded));
 
-    nodes.append('title')
-        .text(d => `${d.data.name || "Amount"}: ${d.data.value}`);
+    // Draw each bubble's circle
+    node.append("circle")
+        .attr("r", d => d.r)
+        .attr("fill", d => colorScale(d.value))
+        .attr("stroke", "#000")
+        .attr("stroke-width", 1);
+
+    // Add token address and amount as combined label on each bubble
+    node.append("text")
+        .text(d => `${d.data.tokenaddress}\n${d.data.amount}`)
+        .attr("dy", "0.3em")
+        .attr("font-size", d => Math.min(d.r / 5, 10))
+        .style("pointer-events", "none")
+        .style("text-anchor", "middle");
+
+    // Update positions on each tick of the simulation
+    function ticked() {
+        node.attr("transform", d => `translate(${d.x},${d.y})`);
+    }
 
     function dragStarted(event, d) {
-        d3.select(this).raise().attr('stroke', 'black');
+        if (!event.active) simulation.alphaTarget(0.1).restart();
+        d.fx = d.x;
+        d.fy = d.y;
     }
 
     function dragged(event, d) {
-        d3.select(this)
-            .attr('cx', d.x = event.x)
-            .attr('cy', d.y = event.y);
+        d.fx = event.x;
+        d.fy = event.y;
     }
 
     function dragEnded(event, d) {
-        d3.select(this).attr('stroke', null);
-    }
-
-    function ticked() {
-        nodes.attr("transform", d => `translate(${d.x}, ${d.y})`);
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
     }
 }
 
 function launchApp() {
-    window.location.href = "/bubbles.html"; // Adjust this path to your app's main page
+    window.location.href = "bubbles.html"; // Adjust this path to your app's main page
 }
 function goHome() {
-    window.location.href = "/index.html"; // Adjust this path to your app's main page
+    window.location.href = "index.html"; // Adjust this path to your app's main page
 }
 
